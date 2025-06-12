@@ -1,17 +1,10 @@
-import ContactsRepository from '../repositories/ContactsRepository';
-import ContactsRepositoryImpl from '../../data/repositories/ContactsRepositoryImpl';
-import { Contact } from 'expo-contacts';
+import { Contact } from '../entities/Contact'
+import { ContactsRepository } from '../repositories/ContactsRepository'
 
-class GetContactsUseCase {
-  private repository: ContactsRepository;
-
-  constructor() {
-    this.repository = new ContactsRepositoryImpl();
-  }
-
-  async execute(): Promise<Contact[]> {
-    return await this.repository.getContacts();
-  }
+const GetContactsUseCase = async (
+  repository: ContactsRepository
+): Promise<Contact[]> => {
+  return await repository.getContacts()
 }
 
-export default GetContactsUseCase;
+export default GetContactsUseCase

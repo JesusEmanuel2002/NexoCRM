@@ -1,5 +1,5 @@
-import { Contact } from 'expo-contacts';
+import { Contact } from '../entities/Contact'
 
-export default interface ContactsRepository {
-  getContacts(): Promise<Contact[]>;
+export interface ContactsRepository {
+  getContacts(): Promise<Contact[]>
 }

@@ -1,11 +1,15 @@
-import ContactsRepository from '../../domain/repositories/ContactsRepository';
-import { Contact } from 'expo-contacts';
-import ContactsService from '../services/ContactsService';
+import { Contact } from '../../domain/entities/Contact';
+import { ContactsRepository } from '../../domain/repositories/ContactsRepository';
+import { ContactsDatasource } from '../datasources/ContactsDatasource';
 
-class ContactsRepositoryImpl implements ContactsRepository {
+export class ContactsRepositoryImpl implements ContactsRepository {
+  private datasource: ContactsDatasource;
+
+  constructor(datasource: ContactsDatasource) {
+    this.datasource = datasource;
+  }
+
   async getContacts(): Promise<Contact[]> {
-    return await ContactsService.fetchContacts();
+    return await this.datasource.fetchContacts();
   }
 }
-
-export default ContactsRepositoryImpl;

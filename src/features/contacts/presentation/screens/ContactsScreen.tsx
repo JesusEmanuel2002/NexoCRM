@@ -1,34 +1,53 @@
-import React, { useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import useContactsViewModel from '../viewmodels/useContactsViewModel';
+import { View, FlatList, Text, StyleSheet } from 'react-native'
+import { useContactsViewModel } from '../viewmodels/useContactsViewModel'
+import { ContactCard } from '../components/ContactCard'
 
-const ContactsScreen = () => {
-  const { contacts, loadContacts } = useContactsViewModel();
+export const ContactsScreen = () => {
+  const { contacts, isLoading, error } = useContactsViewModel()
 
-  useEffect(() => {
-    loadContacts();
-  }, []);
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.message}>Error al cargar los contactos</Text>
+      </View>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.message}>Cargando contactos...</Text>
+      </View>
+    )
+  }
+
+  if (contacts.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.message}>No se encontraron contactos o no se otorgaron permisos.</Text>
+      </View>
+    )
+  }
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={contacts}
-        keyExtractor={(item, index) => item.id ?? index.toString()}
-        renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
-      />
-    </View>
-  );
-};
+    <FlatList
+      data={contacts}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <ContactCard contact={item} />}
+    />
+  )
+}
 
 const styles = StyleSheet.create({
-  container: {
+  centered: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 16,
   },
-  item: {
-    paddingVertical: 8,
+  message: {
     fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
   },
-});
-
-export default ContactsScreen;
+})
