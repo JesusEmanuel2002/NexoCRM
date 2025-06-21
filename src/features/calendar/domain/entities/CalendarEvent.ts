@@ -4,5 +4,5 @@ export interface CalendarEvent {
     description?: string;
     startDate: Date;
     endDate: Date;
-    llDay?: boolean;
+    allDay?: boolean;
 }
