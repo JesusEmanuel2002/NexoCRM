@@ -1,24 +1,47 @@
-import React, { useEffect } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
-import { useCalendarViewModel } from '../viewmodels/CalendarViewModel';
-import CalendarEventList from '../components/CalendarEventList';
+import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { useCalendarViewModel } from '../viewmodels/useCalendarViewModel';
+import { CalendarEventItem } from '../components/CalendarEventItem';
+import { ErrorState } from '@/shared/components/molecules/ErrorState';
+import { EmptyState } from '@/shared/components/molecules/EmptyState';
+import { useTheme } from '@/theme';
 
-const CalendarScreen: React.FC = () => {
-    const { events, loading, error, loadEvents } = useCalendarViewModel();
+export const CalendarScreen = () => {
+    const { events, loading, error } = useCalendarViewModel();
+    const theme = useTheme();
 
-    useEffect(() => {
-        loadEvents();
-    }, []);
+    if (loading) {
+        return (
+            <View style={styles.center}>
+                <ActivityIndicator size="large" color={theme.colors.primary} />
+            </View>
+        );
+    }
 
-    if (loading) return <ActivityIndicator size="large" color="#007AFF" />;
-    if (error) return <Text>Error al cargar eventos</Text>;
-    if (events.length === 0) return <Text>No hay eventos disponibles</Text>;
+    if (error) {
+        return <ErrorState message="Error al cargar los eventos del calendario." />;
+    }
+
+    if (events.length === 0) {
+        return <EmptyState message="No hay eventos disponibles." />;
+    }
 
     return (
-        <View style={{ padding: 16 }}>
-            <CalendarEventList events={events} />
-        </View>
+        <FlatList
+            data={events}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <CalendarEventItem event={item} />}
+            contentContainerStyle={styles.list}
+        />
     );
 };
 
-export default CalendarScreen;
+const styles = StyleSheet.create({
+    list: {
+        padding: 16,
+    },
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+});

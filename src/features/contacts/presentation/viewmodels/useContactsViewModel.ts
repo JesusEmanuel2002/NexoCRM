@@ -1,39 +1,37 @@
-import { useEffect, useState } from 'react'
-import { Contact } from '../../domain/entities/Contact'
-import { ContactsRepositoryImpl } from '../../data/repositories/ContactsRepositoryImpl'
-import { ContactsDatasource } from '../../data/datasources/ContactsDatasource'
-import GetContactsUseCase from '../../domain/usecases/GetContactsUseCase'
+import { useEffect, useState } from 'react';
+import { GetContactsUseCase } from '../../domain/usecases/GetContactsUseCase';
+import { ContactsRepositoryImpl } from '../../data/repositories/ContactsRepositoryImpl';
+import { ContactsDatasource } from '../../data/datasources/ContactsDatasource';
+import { Contact } from '../../domain/entities/Contact';
 
-const useContactsViewModel = () => {
-  const [contacts, setContacts] = useState<Contact[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
+export const useContactsViewModel = () => {
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const loadContacts = async () => {
-    setLoading(true)
-    setError(null)
-
-    const repository = new ContactsRepositoryImpl(new ContactsDatasource())
-
+    setLoading(true);
     try {
-      const data = await GetContactsUseCase(repository)
-      setContacts(data)
+      const datasource = new ContactsDatasource();
+      const repository = new ContactsRepositoryImpl(datasource);
+      const useCase = new GetContactsUseCase(repository);
+      const data = await useCase.execute();
+      setContacts(data);
+      setError(null);
     } catch (err) {
-      setError('Hubo un error al obtener los contactos.')
+      setError('Error al cargar los contactos');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    loadContacts()
-  }, [])
+    loadContacts();
+  }, []);
 
   return {
     contacts,
     loading,
     error,
-  }
-}
-
-export default useContactsViewModel
+  };
+};

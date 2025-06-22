@@ -1,23 +1,50 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { CalendarEvent } from '../../domain/entities/CalendarEvent';
+import { useTheme } from '@/theme';
 
 interface Props {
     event: CalendarEvent;
 }
 
-const CalendarEventItem: React.FC<Props> = ({ event }) => {
+export const CalendarEventItem = ({ event }: Props) => {
+    const theme = useTheme();
+
     return (
-        <View style={{ padding: 12, borderBottomWidth: 1, borderColor: '#ccc' }}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{event.title}</Text>
-            <Text style={{ color: '#666' }}>{event.description || 'Sin descripción'}</Text>
-            <Text>
-                {event.allDay
-                ? 'Todo el día'
-                : `${event.startDate.toLocaleString()} - ${event.endDate.toLocaleString()}`}
-            </Text>
+        <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
+        <Text style={[styles.title, { color: theme.colors.text }]}>
+            {event.title}
+        </Text>
+        <Text style={[styles.description, { color: theme.colors.text }]}>
+            {event.description || 'Sin descripción'}
+        </Text>
+        <Text style={[styles.date, { color: theme.colors.textSecondary }]}>
+            {event.startDate.toLocaleString()} - {event.endDate.toLocaleString()}
+        </Text>
         </View>
     );
 };
 
-export default CalendarEventItem;
+const styles = StyleSheet.create({
+    card: {
+        padding: 16,
+        borderRadius: 12,
+        marginBottom: 12,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 1 },
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: '600',
+        marginBottom: 4,
+    },
+    description: {
+        fontSize: 14,
+        marginBottom: 4,
+    },
+    date: {
+        fontSize: 12,
+    },
+});

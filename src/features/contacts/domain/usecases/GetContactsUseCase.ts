@@ -1,10 +1,10 @@
-import { Contact } from '../entities/Contact'
-import { ContactsRepository } from '../repositories/ContactsRepository'
+import { Contact } from '../entities/Contact';
+import { ContactsRepository } from '../repositories/ContactsRepository';
 
-const GetContactsUseCase = async (
-  repository: ContactsRepository
-): Promise<Contact[]> => {
-  return await repository.getContacts()
+export class GetContactsUseCase {
+  constructor(private repository: ContactsRepository) {}
+
+  async execute(): Promise<Contact[]> {
+    return this.repository.getContacts();
+  }
 }
-
-export default GetContactsUseCase
