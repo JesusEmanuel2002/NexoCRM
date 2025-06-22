@@ -1,53 +1,51 @@
-import { View, FlatList, Text, StyleSheet } from 'react-native'
-import { useContactsViewModel } from '../viewmodels/useContactsViewModel'
-import { ContactCard } from '../components/ContactCard'
+import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { useContactsViewModel } from '../viewmodels/useContactsViewModel';
+import { ContactItem } from '../components/ContactItem';
+import { ErrorState } from '@/shared/components/molecules/ErrorState';
+import { EmptyState } from '@/shared/components/molecules/EmptyState';
+import { useTheme } from '@/theme';
 
 export const ContactsScreen = () => {
-  const { contacts, isLoading, error } = useContactsViewModel()
+  const { contacts, loading, error } = useContactsViewModel();
+  const theme = useTheme();
+
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color={theme.colors.primary} />
+      </View>
+    );
+  }
 
   if (error) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.message}>Error al cargar los contactos</Text>
-      </View>
-    )
-  }
-
-  if (isLoading) {
-    return (
-      <View style={styles.centered}>
-        <Text style={styles.message}>Cargando contactos...</Text>
-      </View>
-    )
+      <ErrorState message="Ocurrió un error al cargar los contactos." />
+    );
   }
 
   if (contacts.length === 0) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.message}>No se encontraron contactos o no se otorgaron permisos.</Text>
-      </View>
-    )
+      <EmptyState message="No hay contactos disponibles." />
+    );
   }
 
   return (
     <FlatList
       data={contacts}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <ContactCard contact={item} />}
+      renderItem={({ item }) => <ContactItem contact={item} />}
+      contentContainerStyle={styles.list}
     />
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
-  centered: {
+  list: {
+    padding: 16,
+  },
+  center: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
   },
-  message: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-  },
-})
+});

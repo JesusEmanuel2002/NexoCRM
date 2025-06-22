@@ -1,38 +1,33 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { CalendarEvent } from '../../domain/entities/CalendarEvent';
-import { format } from 'date-fns';
-import { useTheme } from '@/theme/useTheme';
+import { useTheme } from '@/theme';
 
 interface Props {
     event: CalendarEvent;
 }
 
-export function CalendarEventCard({ event }: Props) {
-    const { colors, typography } = useTheme();
+export const CalendarEventCard = ({ event }: Props) => {
+    const theme = useTheme();
 
     return (
-        <View style={{
-            backgroundColor: colors.card,
-            padding: 12,
-            marginVertical: 6,
-            borderRadius: 16,
-            shadowColor: '#000',
-            shadowOpacity: 0.05,
-            shadowRadius: 6,
-            }}>
-            <Text style={{ color: colors.text, fontSize: typography.title, fontWeight: '600' }}>
-                {event.title}
-            </Text>
-            {event.description && (
-                <Text style={{ color: colors.muted, fontSize: typography.body }}>
-                    {event.description}
-                </Text>
-            )}
-            <Text style={{ color: colors.primary, fontSize: typography.caption, marginTop: 6 }}>
-                {event.allDay
-                ? 'Todo el día'
-                : `${format(new Date(event.startDate), 'p')} - ${format(new Date(event.endDate), 'p')}`}
-            </Text>
+        <View style={[styles.card, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+            <Text style={[styles.title, { color: theme.colors.text }]}>{event.title}</Text>
+            <Text style={{ color: theme.colors.text }}>{event.startDate.toLocaleString()}</Text>
+            <Text style={{ color: theme.colors.text }}>{event.description}</Text>
         </View>
     );
-}
+};
+
+const styles = StyleSheet.create({
+    card: {
+        padding: 12,
+        marginVertical: 6,
+        borderRadius: 10,
+        borderWidth: 1,
+    },
+    title: {
+        fontSize: 16,
+        fontWeight: '600',
+        marginBottom: 4,
+    },
+});
