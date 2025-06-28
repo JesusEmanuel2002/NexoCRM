@@ -18,15 +18,11 @@ export const ContactsScreen = () => {
   }
 
   if (error) {
-    return (
-      <ErrorState message="Ocurrió un error al cargar los contactos." />
-    );
+    return <ErrorState message={error} />;
   }
 
   if (contacts.length === 0) {
-    return (
-      <EmptyState message="No hay contactos disponibles." />
-    );
+    return <EmptyState message="No hay contactos disponibles." />;
   }
 
   return (

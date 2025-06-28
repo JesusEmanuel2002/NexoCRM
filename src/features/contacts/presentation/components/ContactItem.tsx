@@ -1,58 +1,66 @@
-import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
-import { Contact } from '../../domain/entities/Contact'
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { Contact } from '../../domain/entities/Contact';
+import { useTheme } from '@/theme';
 
-interface Props {
-  contact: Contact
-}
+type Props = {
+  contact: Contact;
+};
 
-export const ContactItem: React.FC<Props> = ({ contact }) => {
+export const ContactItem = ({ contact }: Props) => {
+  const theme = useTheme();
+  
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { borderColor: theme.colors.border }]}>
       {contact.image ? (
         <Image source={{ uri: contact.image }} style={styles.image} />
       ) : (
-        <View style={styles.placeholderImage} />
+        <View style={[styles.placeholder, { backgroundColor: theme.colors.border }]} />
       )}
-      <View style={styles.textContainer}>
-        <Text style={styles.name}>{contact.name}</Text>
+
+      <View style={styles.info}>
+        <Text style={[styles.name, { color: theme.colors.text }]}>{contact.name}</Text>
+
         {contact.phoneNumbers.map((phone, index) => (
-          <Text key={index} style={styles.phone}>
-            {phone}
+          <Text key={index} style={{ color: theme.colors.text }}>
+            📞 {phone}
+          </Text>
+        ))}
+
+        {contact.emails.map((email, index) => (
+          <Text key={index} style={{ color: theme.colors.text }}>
+            ✉️ {email}
           </Text>
         ))}
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     padding: 12,
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
-    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 12,
   },
   image: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    marginRight: 12,
   },
-  placeholderImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#ccc',
+  placeholder: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    marginRight: 12,
   },
-  textContainer: {
-    marginLeft: 12,
+  info: {
+    flex: 1,
   },
   name: {
     fontWeight: 'bold',
     fontSize: 16,
   },
-  phone: {
-    color: '#555',
-  },
-})
+});

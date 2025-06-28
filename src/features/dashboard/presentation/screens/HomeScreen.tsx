@@ -14,7 +14,7 @@ export const DashboardScreen = () => {
   if (!data) return <EmptyState message="Sin datos para mostrar." />;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <DashboardStatCard label="Contactos" value={data.totalContacts} />
       <DashboardStatCard label="Eventos" value={data.upcomingEvents} />
       <DashboardStatCard label="Notificaciones" value={data.recentNotifications} />
@@ -24,6 +24,7 @@ export const DashboardScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 16,
     gap: 12,
   },

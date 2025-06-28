@@ -1,16 +1,38 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { useTheme } from '@/theme';
 
-interface DashboardStatCardProps {
+interface Props {
     label: string;
     value: number;
 }
 
-export const DashboardStatCard: React.FC<DashboardStatCardProps> = ({ label, value }) => {
+export const DashboardStatCard = ({ label, value }: Props) => {
+    const theme = useTheme();
+
     return (
-        <View style={{ padding: 16, backgroundColor: '#f2f2f2', borderRadius: 12, marginBottom: 12 }}>
-            <Text style={{ fontSize: 16, fontWeight: '600' }}>{label}</Text>
-            <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#2e86de' }}>{value}</Text>
+        <View style={[styles.card, { backgroundColor: theme.colors.card }]}>
+            <Text style={[styles.label, { color: theme.colors.text }]}>{label}</Text>
+            <Text style={[styles.value, { color: theme.colors.primary }]}>{value}</Text>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    card: {
+        padding: 16,
+        borderRadius: 12,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        elevation: 2,
+    },
+    label: {
+        fontSize: 14,
+        fontWeight: '600',
+        marginBottom: 4,
+    },
+    value: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+});
