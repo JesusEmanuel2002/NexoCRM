@@ -32,10 +32,36 @@ Esto abrirá **Expo DevTools** en tu navegador. Puedes escanear el código QR co
 
 ---
 
-## 📦 Link de instalación en Expo
+## 🚀 Instrucciones de instalación
 
-📲 **Instálalo directamente en tu celular usando este link (Expo Go):**
-🔗 [https://expo.dev/@TU\_USUARIO/nexocrm]()
+### Requisitos previos
+
+- Node.js v18 (recomendado por Expo)
+- Expo CLI (instalar con `npm install -g expo-cli`)
+- Cuenta en [Expo.dev](https://expo.dev/)
+
+### Pasos para ejecutar la app localmente
+
+1. **Clona el repositorio**:
+
+```bash
+git clone https://github.com/tu_usuario/nexocrm.git
+cd nexocrm
+````
+
+2. **Instala las dependencias**:
+
+```bash
+npm install
+```
+
+3. **Ejecuta el proyecto en Expo Go (Android o iOS)**:
+
+```bash
+npm start
+```
+
+4. **Escanea el QR** con la app de **Expo Go** para ver la app en tu dispositivo.
 
 ---
 
@@ -45,6 +71,24 @@ Esto abrirá **Expo DevTools** en tu navegador. Puedes escanear el código QR co
 * **Arquitectura CLEAN**
 * **MVVM (Model - View - ViewModel)**
 * **Atomic Design** (para componentes de UI)
+
+---
+
+## 🧠 Estructura del proyecto
+
+```
+src/
+├── features/              # Módulos principales del CRM (contacts, calendar, etc.)
+│   └── contacts/          # Módulo para gestionar contactos
+│   └── calendar/          # Módulo para eventos del calendario
+│   └── dashboard/         # Vista principal con resumen de información
+│   └── notifications/     # Módulo para ver notificaciones
+│   └── settings/          # Módulo para preferencias del usuario
+│
+├── shared/                # Componentes reutilizables compartidos (UI: botones, estados, etc.)
+├── navigation/            # Sistema de navegación principal (RootNavigator)
+├── theme/                 # Colores, tipografía y estilos globales
+```
 
 ---
 
@@ -60,6 +104,24 @@ Esto abrirá **Expo DevTools** en tu navegador. Puedes escanear el código QR co
 * **expo-contacts**
 * **expo-calendar**
 * **expo-notifications**
+
+---
+
+## 📚 Librerías utilizadas y su propósito
+
+| Librería                             | Propósito                                               |
+| ------------------------------------ | ------------------------------------------------------- |
+| **expo**                             | Framework base para desarrollo rápido con React Native  |
+| **expo-contacts**                    | Acceso a contactos nativos del dispositivo              |
+| **expo-calendar**                    | Lectura de eventos del calendario                       |
+| **expo-notifications**               | Gestión de notificaciones locales y push                |
+| **@react-navigation**                | Sistema de navegación entre pantallas                   |
+| **zustand**                          | Manejo de estado global, simple y rápido                |
+| **react-hook-form**                  | Manejo de formularios y validaciones                    |
+| **zod**                              | Validación de esquemas de datos                         |
+| **react-native-chart-kit**           | Gráficas y visualización de datos                       |
+| **tailwind-react-native-classnames** | Estilado rápido y reutilizable con clases tipo Tailwind |
+| **expo-sqlite**                      | (Opcional) Almacenamiento local de datos con SQLite     |
 
 ---
 
