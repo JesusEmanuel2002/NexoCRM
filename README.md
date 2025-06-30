@@ -121,7 +121,6 @@ src/
 | **zod**                              | Validación de esquemas de datos                         |
 | **react-native-chart-kit**           | Gráficas y visualización de datos                       |
 | **tailwind-react-native-classnames** | Estilado rápido y reutilizable con clases tipo Tailwind |
-| **expo-sqlite**                      | (Opcional) Almacenamiento local de datos con SQLite     |
 
 ---
 
