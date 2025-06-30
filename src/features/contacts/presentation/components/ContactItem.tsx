@@ -9,6 +9,7 @@ type Props = {
 export const ContactItem = ({ contact }: Props) => {
   const theme = useTheme();
   
+  // Renderiza un contacto individual con su nombre y datos disponibles
   return (
     <View style={[styles.container, { borderColor: theme.colors.border }]}>
       {contact.image ? (

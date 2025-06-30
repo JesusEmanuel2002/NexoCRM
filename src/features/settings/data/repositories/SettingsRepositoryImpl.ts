@@ -1,19 +1,18 @@
-import { SettingsOption } from '../../domain/entities/SettingsOption';
 import { SettingsRepository } from '../../domain/repositories/SettingsRepository';
 import { SettingsDatasource } from '../datasources/SettingsDatasource';
+import { Settings } from '../../domain/entities/Settings';
 
+// Implementación del repositorio que interactúa con el datasource
 export class SettingsRepositoryImpl implements SettingsRepository {
-    constructor(private readonly datasource: SettingsDatasource) {}
+    constructor(private datasource: SettingsDatasource) {}
 
-    async getOptions(): Promise<SettingsOption[]> {
-        const rawOptions = await this.datasource.fetchAvailableOptions();
+    // Método para obtener los ajustes actuales
+    async getSettings(): Promise<Settings> {
+        return await this.datasource.getSettings();
+    }
 
-        return rawOptions.map((opt) => ({
-            id: opt.id,
-            label: opt.label,
-            onPress: () => {
-                console.log(`Seleccionaste: ${opt.label}`);
-            },
-        }));
+    // Método para actualizar los ajustes
+    async updateSettings(settings: Settings): Promise<void> {
+        await this.datasource.updateSettings(settings);
     }
 }

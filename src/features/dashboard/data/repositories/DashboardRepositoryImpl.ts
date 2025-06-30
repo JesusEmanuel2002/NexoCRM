@@ -1,11 +1,13 @@
 import { DashboardRepository } from '../../domain/repositories/DashboardRepository';
-import { DashboardData } from '../../domain/entities/DashboardData';
 import { DashboardDatasource } from '../datasources/DashboardDatasource';
+import { DashboardData } from '../../domain/entities/DashboardData';
 
+// Implementación del repositorio que delega en la fuente de datos
 export class DashboardRepositoryImpl implements DashboardRepository {
-    constructor(private datasource: typeof DashboardDatasource) {}
+    private datasource = DashboardDatasource;
 
+    // Método que obtiene todos los datos del dashboard
     async getDashboardData(): Promise<DashboardData> {
-        return this.datasource.fetchDashboardData();
+        return await this.datasource.fetchDashboardData();
     }
 }

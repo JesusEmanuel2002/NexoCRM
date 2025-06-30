@@ -6,6 +6,7 @@ interface Props {
     event: CalendarEvent;
 }
 
+// Componente visual que muestra un único evento del calendario
 export const CalendarEventItem = ({ event }: Props) => {
     const theme = useTheme();
 
@@ -17,6 +18,7 @@ export const CalendarEventItem = ({ event }: Props) => {
                     {event.description}
                 </Text>
             )}
+
             <Text style={{ color: theme.colors.text }}>
                 {event.allDay
                 ? 'Todo el día'

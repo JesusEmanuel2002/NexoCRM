@@ -1,3 +1,4 @@
+// Entidad que representa un evento del calendario
 export interface CalendarEvent {
     id: string;
     title: string;

@@ -14,6 +14,14 @@ export class NotificationsDatasource {
                 title: 'Bienvenido a NexoCRM',
                 body: 'Gracias por instalar nuestra app',
                 date: new Date(),
+                read: false
+            },
+            {
+                id: '2',
+                title: 'Nuevo contacto añadido',
+                body: 'Juan Pérez fue añadido a tus contactos.',
+                date: new Date(),
+                read: true,
             },
         ];
         

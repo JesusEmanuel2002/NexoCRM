@@ -9,6 +9,7 @@ export const ContactsScreen = () => {
   const { contacts, loading, error } = useContactsViewModel();
   const theme = useTheme();
 
+  // Muestra indicador de carga mientras se obtienen los contactos
   if (loading) {
     return (
       <View style={styles.center}>
@@ -17,14 +18,21 @@ export const ContactsScreen = () => {
     );
   }
 
+  // Muestra un estado de error si la carga falla
   if (error) {
-    return <ErrorState message={error} />;
+    return (
+      <ErrorState message="Ocurrió un error al cargar los contactos." />
+    );
   }
 
+  // Muestra un estado vacío si no hay contactos disponibles
   if (contacts.length === 0) {
-    return <EmptyState message="No hay contactos disponibles." />;
+    return (
+      <EmptyState message="No hay contactos disponibles." />
+    );
   }
 
+  // Muestra la lista de contactos
   return (
     <FlatList
       data={contacts}

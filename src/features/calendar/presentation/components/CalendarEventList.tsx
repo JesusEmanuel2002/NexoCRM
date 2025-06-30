@@ -1,21 +1,25 @@
-import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import { CalendarEvent } from '../../domain/entities/CalendarEvent';
-import CalendarEventItem from './CalendarEventItem';
+import { CalendarEventItem } from './CalendarEventItem';
 
 interface Props {
     events: CalendarEvent[];
 }
 
-const CalendarEventList: React.FC<Props> = ({ events }) => {
+// Lista que renderiza múltiples eventos del calendario usando CalendarEventItem
+export const CalendarEventList = ({ events }: Props) => {
     return (
         <FlatList
             data={events}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <CalendarEventItem event={item} />}
-            ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-         />
-    );
+            contentContainerStyle={styles.list}
+        />
+     );
 };
 
-export default CalendarEventList;
+const styles = StyleSheet.create({
+    list: {
+        padding: 16,
+    },
+});

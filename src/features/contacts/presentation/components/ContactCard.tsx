@@ -1,27 +1,37 @@
-import { View, Text, Image } from 'react-native'
-import { Contact } from '../../domain/entities/Contact'
+import { View, Text, StyleSheet } from 'react-native';
+import { useTheme } from '@/theme';
 
-type Props = {
-    contact: Contact
+interface Props {
+    title: string;
+    value: number;
 }
 
-export const ContactCard = ({ contact }: Props) => {
+export const ContactsCard = ({ title, value }: Props) => {
+    const theme = useTheme();
+
+    // Tarjeta visual que muestra estadísticas o datos resumidos del módulo de contactos
     return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', padding: 12, borderBottomWidth: 1, borderColor: '#eee' }}>
-        {contact.image ? (
-            <Image source={{ uri: contact.image }} style={{ width: 40, height: 40, borderRadius: 20, marginRight: 12 }} />
-        ) : (
-        <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: '#ccc', marginRight: 12 }} />
-        )}
-        <View>
-            <Text style={{ fontWeight: '600' }}>{contact.name}</Text>
-            {contact.phoneNumbers.map((phone, idx) => (
-                <Text key={idx} style={{ fontSize: 12 }}>{phone}</Text>
-            ))}
-            {contact.emails.map((email, idx) => (
-                <Text key={idx} style={{ fontSize: 12 }}>{email}</Text>
-            ))}
+        <View style={[styles.card, { backgroundColor: theme.colors.background }]}>
+            <Text style={[styles.title, { color: theme.colors.text }]}>{title}</Text>
+            <Text style={[styles.value, { color: theme.colors.primary }]}>{value}</Text>
         </View>
-    </View>
-    )
-}
+    );
+};
+
+const styles = StyleSheet.create({
+    card: {
+        padding: 16,
+        borderRadius: 12,
+        elevation: 2,
+        marginBottom: 12,
+    },
+    title: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    value: {
+        fontSize: 20,
+        fontWeight: '600',
+        marginTop: 4,
+    },
+});

@@ -1,11 +1,16 @@
 import * as ExpoContacts from 'expo-contacts';
 import { Contact } from '../../domain/entities/Contact';
 
+// Fuente de datos que obtiene los contactos desde el dispositivo usando expo-contacts
 export class ContactsDatasource {
+    // Método para obtener y transformar los contactos
     async fetchContacts(): Promise<Contact[]> {
+    
+        // Solicita permiso para acceder a los contactos
         const { status } = await ExpoContacts.requestPermissionsAsync();
         if (status !== 'granted') return [];
-        
+
+        // Obtiene los datos de contactos con campos adicionales
         const { data } = await ExpoContacts.getContactsAsync({
             fields: [
                 ExpoContacts.Fields.Name,
@@ -15,7 +20,8 @@ export class ContactsDatasource {
                 ExpoContacts.Fields.Image,
             ],
         });
-        
+
+        // Filtra y transforma los contactos al modelo definido en la entidad
         return data
         .filter(contact => contact.id && contact.name)
         .map((contact): Contact => ({
